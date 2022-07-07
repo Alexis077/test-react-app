@@ -17,7 +17,7 @@ const Home = () => {
                 <div className="col-sm-6">
                     <div className="card">
                     <div className="card-body">
-                        <h5 className="card-title">Curses</h5>
+                        <h5 className="card-title">Courses</h5>
                         <Link className='btn btn-primary' to="/courses">Show</Link>
                     </div>
                     </div>
