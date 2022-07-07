@@ -62,6 +62,9 @@ const Courses = () => {
                 </tbody>
             </table>
             </div>
+            <div className='row'>
+                <div className='col'><Link className='btn btn-secondary' to="/">Back</Link></div>
+            </div>
         </div>
     )
 }
