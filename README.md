@@ -1,24 +1,10 @@
 # README
+## Instructions
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+- Install Ruby 2.7.3 and Rails 6.1.6
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+1. Run `bundle install`
+2. Run `yarn install`
+3. Run `rake db:create db:migrate`
+4. Run `rails s`
+5. Access to the app using http://localhost:3000
