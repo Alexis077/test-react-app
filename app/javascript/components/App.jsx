@@ -10,6 +10,9 @@ import Student from '../components/students/Student'
 import NewStudent from '../components/students/NewStudent'
 import EditStudent from '../components/students/EditStudent'
 import Courses from '../components/courses/Courses'
+import Course from '../components/courses/Course'
+import NewCourse from '../components/courses/NewCourse'
+import EditCourse from '../components/courses/EditCourse'
 
 const App = () => {
     return(
@@ -20,6 +23,9 @@ const App = () => {
             <Route path="/students/new" element={<NewStudent />} />
             <Route path="/students/:id/edit" element={<EditStudent />} />
             <Route path="/courses" element={<Courses />} />
+            <Route path="/courses/:id" element={<Course />} />
+            <Route path="/courses/new" element={<NewCourse />} />
+            <Route path="/courses/:id/edit" element={<EditCourse />} />
         </Routes>
     )
 }

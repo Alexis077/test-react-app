@@ -57,9 +57,9 @@ const Students = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {list
+                    {list.length
                         ? list
-                        : <tr><td colspan="4">No data</td></tr>
+                        : <tr><td className='text-center' colSpan="4">No data</td></tr>
                     }
                 </tbody>
             </table>
