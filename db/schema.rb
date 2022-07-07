@@ -19,15 +19,15 @@ ActiveRecord::Schema.define(version: 2022_07_05_214313) do
   end
 
   create_table "grades", force: :cascade do |t|
-    t.integer "students_id"
-    t.integer "courses_id"
+    t.integer "student_id"
+    t.integer "course_id"
     t.string "quarter"
     t.integer "score"
     t.boolean "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["courses_id"], name: "index_grades_on_courses_id"
-    t.index ["students_id"], name: "index_grades_on_students_id"
+    t.index ["course_id"], name: "index_grades_on_course_id"
+    t.index ["student_id"], name: "index_grades_on_student_id"
   end
 
   create_table "students", force: :cascade do |t|
@@ -37,6 +37,6 @@ ActiveRecord::Schema.define(version: 2022_07_05_214313) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "grades", "courses", column: "courses_id"
-  add_foreign_key "grades", "students", column: "students_id"
+  add_foreign_key "grades", "courses"
+  add_foreign_key "grades", "students"
 end

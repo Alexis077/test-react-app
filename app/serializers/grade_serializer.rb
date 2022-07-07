@@ -1,5 +1,5 @@
 class GradeSerializer < ActiveModel::Serializer
-  attributes :id, :student, :course, :score, :status
+  attributes :id, :student, :course, :quarter, :score, :status
 
   def status
     object.status ? 'Approved' : 'Rejected' 

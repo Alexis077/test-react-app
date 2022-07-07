@@ -15,6 +15,7 @@ module Api
                 if @grade.save
                     render json: @grade
                 else
+                    byebug
                     render json: @grade.errors, status: :unprocessable_entity
                 end
             end
@@ -42,7 +43,7 @@ module Api
             end
             
             def grade_params
-                params.require(:grade).permit(:students_id, :courses_id, :quarter, :score)
+                params.require(:grade).permit(:student_id, :course_id, :quarter, :score)
             end
         end
     end

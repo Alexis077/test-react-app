@@ -22,6 +22,14 @@ const Home = () => {
                     </div>
                     </div>
                 </div>
+                <div className="col-sm-6">
+                    <div className="card">
+                    <div className="card-body">
+                        <h5 className="card-title">Grades</h5>
+                        <Link className='btn btn-primary' to="/grades">Show</Link>
+                    </div>
+                    </div>
+                </div>
             </div>
         </div>
     )

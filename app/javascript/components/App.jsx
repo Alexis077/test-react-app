@@ -13,6 +13,10 @@ import Courses from '../components/courses/Courses'
 import Course from '../components/courses/Course'
 import NewCourse from '../components/courses/NewCourse'
 import EditCourse from '../components/courses/EditCourse'
+import Grades from '../components/grades/Grades';
+import Grade from '../components/grades/Grade';
+import NewGrade from '../components/grades/NewGrade';
+import EditGrade from '../components/grades/EditGrade';
 
 const App = () => {
     return(
@@ -26,6 +30,10 @@ const App = () => {
             <Route path="/courses/:id" element={<Course />} />
             <Route path="/courses/new" element={<NewCourse />} />
             <Route path="/courses/:id/edit" element={<EditCourse />} />
+            <Route path="/grades" element={<Grades />} />
+            <Route path="/grades/:id" element={<Grade />} />
+            <Route path="/grades/new" element={<NewGrade />} />
+            <Route path="/grades/:id/edit" element={<EditGrade />} />
         </Routes>
     )
 }
