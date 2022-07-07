@@ -3,7 +3,7 @@ module Api
         class StudentsController < ApplicationController
             before_action :set_student, only: [:show,:update, :destroy]
             def index
-                render json: Student.all
+                render json: Student.all.order(id: :asc)
             end
 
             def show 

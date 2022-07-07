@@ -12,9 +12,6 @@
 
 ActiveRecord::Schema.define(version: 2022_07_05_214313) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "courses", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -22,8 +19,8 @@ ActiveRecord::Schema.define(version: 2022_07_05_214313) do
   end
 
   create_table "grades", force: :cascade do |t|
-    t.bigint "students_id"
-    t.bigint "courses_id"
+    t.integer "students_id"
+    t.integer "courses_id"
     t.string "quarter"
     t.integer "score"
     t.boolean "status"
