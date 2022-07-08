@@ -15,7 +15,6 @@ module Api
                 if @grade.save
                     render json: @grade
                 else
-                    byebug
                     render json: @grade.errors, status: :unprocessable_entity
                 end
             end
