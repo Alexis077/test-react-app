@@ -3,12 +3,18 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::CoursesController, type: :controller do
+  include JsonWebToken
+  let!(:user) { FactoryBot.create(:user) }
+  let!(:token) { jwt_encode(user_id: user.id) }
+  let!(:headers) { { 'Authorization': token } }
+
   describe 'GET #index' do
     let!(:course) { FactoryBot.create(:course) }
     let!(:course_2) { FactoryBot.create(:course) }
 
     context 'Get all information of courses' do
       it 'success response' do
+        request.headers.merge!(headers)
         get(:index)        
         json_response = JSON.parse(response.body)
         expect(response.status).to eq(200)
@@ -21,6 +27,7 @@ RSpec.describe Api::V1::CoursesController, type: :controller do
     let!(:course) { FactoryBot.create(:course) }
     context 'Get all information of a course' do
       it 'success response' do
+        request.headers.merge!(headers)
         get(:index, params: {id: course.id})
         json_response = JSON.parse(response.body)        
         expect(response.status).to eq(200)
@@ -36,6 +43,7 @@ RSpec.describe Api::V1::CoursesController, type: :controller do
 
     context 'create new course' do
       it 'success response' do
+        request.headers.merge!(headers)
         post(:create, params: params)      
         json_response = JSON.parse(response.body)  
         expect(response.status).to eq(200)
@@ -47,6 +55,7 @@ RSpec.describe Api::V1::CoursesController, type: :controller do
       let!(:course) { FactoryBot.create(:course, name: params[:course][:name]) } 
       
       it 'error response' do
+        request.headers.merge!(headers)
         post(:create, params: params)      
         json_response = JSON.parse(response.body)  
         expect(response.status).to eq(422)
@@ -57,6 +66,7 @@ RSpec.describe Api::V1::CoursesController, type: :controller do
     context 'try to create with blank parameters' do      
       it 'errors with blank name' do
         params[:course][:name] = ""
+        request.headers.merge!(headers)
         post(:create, params: params)      
         json_response = JSON.parse(response.body)  
         expect(response.status).to eq(422)
@@ -76,6 +86,7 @@ RSpec.describe Api::V1::CoursesController, type: :controller do
         
     context 'update course' do
       it 'success response' do
+        request.headers.merge!(headers)
         put(:update,params: params)      
         json_response = JSON.parse(response.body)  
         expect(response.status).to eq(200)
@@ -87,6 +98,7 @@ RSpec.describe Api::V1::CoursesController, type: :controller do
       let!(:course_2) { FactoryBot.create(:course, name: params[:course][:name]) } 
       
       it 'error response' do
+        request.headers.merge!(headers)
         put(:update, params: params)      
         json_response = JSON.parse(response.body)  
         expect(response.status).to eq(422)
@@ -97,6 +109,7 @@ RSpec.describe Api::V1::CoursesController, type: :controller do
     context 'try to update with blank parameters' do
       it 'errors with blank name' do
         params[:course][:name] = ""
+        request.headers.merge!(headers)
         put(:update, params: params)      
         json_response = JSON.parse(response.body)  
         expect(response.status).to eq(422)
@@ -110,6 +123,7 @@ RSpec.describe Api::V1::CoursesController, type: :controller do
         
     context 'Delete register' do
       it 'success response' do
+        request.headers.merge!(headers)
         delete(:destroy, params: { id: course.id })      
         json_response = JSON.parse(response.body)  
         expect(response.status).to eq(200)

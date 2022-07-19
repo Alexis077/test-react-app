@@ -8,6 +8,12 @@ Rails.application.routes.draw do
       resources :students
       resources :courses
       resources :grades
+      resources :users
+      resources :authentications, only: [:login] do 
+        collection do 
+          post 'login', to: 'authentications#login'
+        end
+      end
     end
   end
 

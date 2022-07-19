@@ -3,12 +3,18 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::StudentsController, type: :controller do
+  include JsonWebToken
+  let!(:user) { FactoryBot.create(:user) }
+  let!(:token) { jwt_encode(user_id: user.id) }
+  let!(:headers) { { 'Authorization': token } }
+  
   describe 'GET #index' do
     let!(:student) { FactoryBot.create(:student) }
     let!(:student_2) { FactoryBot.create(:student) }
 
     context 'Get all information of students' do
       it 'success response' do
+        request.headers.merge!(headers)
         get(:index)        
         json_response = JSON.parse(response.body)
         expect(response.status).to eq(200)
@@ -21,6 +27,7 @@ RSpec.describe Api::V1::StudentsController, type: :controller do
     let!(:student) { FactoryBot.create(:student) }
     context 'Get all information of a student' do
       it 'success response' do
+        request.headers.merge!(headers)
         get(:index, params: {id: student.id})
         json_response = JSON.parse(response.body)        
         expect(response.status).to eq(200)
@@ -36,6 +43,7 @@ RSpec.describe Api::V1::StudentsController, type: :controller do
 
     context 'create new student' do
       it 'success response' do
+        request.headers.merge!(headers)
         post(:create,params: params)      
         json_response = JSON.parse(response.body)  
         expect(response.status).to eq(200)
@@ -48,6 +56,7 @@ RSpec.describe Api::V1::StudentsController, type: :controller do
       let!(:student) { FactoryBot.create(:student, name: params[:student][:name], last_name: params[:student][:last_name]) } 
       
       it 'error response' do
+        request.headers.merge!(headers)
         post(:create, params: params)      
         json_response = JSON.parse(response.body)  
         expect(response.status).to eq(422)
@@ -58,6 +67,7 @@ RSpec.describe Api::V1::StudentsController, type: :controller do
     context 'try to create with blank parameters' do      
       it 'errors with blank name' do
         params[:student][:name] = ""
+        request.headers.merge!(headers)
         post(:create, params: params)      
         json_response = JSON.parse(response.body)  
         expect(response.status).to eq(422)
@@ -66,6 +76,7 @@ RSpec.describe Api::V1::StudentsController, type: :controller do
 
       it 'errors with blank last_name' do
         params[:student][:last_name] = ""
+        request.headers.merge!(headers)
         post(:create, params: params)      
         json_response = JSON.parse(response.body)  
         expect(response.status).to eq(422)
@@ -85,6 +96,7 @@ RSpec.describe Api::V1::StudentsController, type: :controller do
         
     context 'update student' do
       it 'success response' do
+        request.headers.merge!(headers)
         put(:update,params: params)      
         json_response = JSON.parse(response.body)  
         expect(response.status).to eq(200)
@@ -97,6 +109,7 @@ RSpec.describe Api::V1::StudentsController, type: :controller do
       let!(:student_2) { FactoryBot.create(:student, name: params[:student][:name], last_name: params[:student][:last_name]) } 
       
       it 'error response' do
+        request.headers.merge!(headers)
         put(:update, params: params)      
         json_response = JSON.parse(response.body)  
         expect(response.status).to eq(422)
@@ -107,6 +120,7 @@ RSpec.describe Api::V1::StudentsController, type: :controller do
     context 'try to update with blank parameters' do
       it 'errors with blank name' do
         params[:student][:name] = ""
+        request.headers.merge!(headers)
         put(:update, params: params)      
         json_response = JSON.parse(response.body)  
         expect(response.status).to eq(422)
@@ -115,6 +129,7 @@ RSpec.describe Api::V1::StudentsController, type: :controller do
 
       it 'errors with blank last_name' do
         params[:student][:last_name] = ""
+        request.headers.merge!(headers)
         put(:update, params: params)      
         json_response = JSON.parse(response.body)  
         expect(response.status).to eq(422)
@@ -128,6 +143,7 @@ RSpec.describe Api::V1::StudentsController, type: :controller do
         
     context 'Delete register' do
       it 'success response' do
+        request.headers.merge!(headers)
         delete(:destroy, params: { id: student.id })      
         json_response = JSON.parse(response.body)  
         expect(response.status).to eq(200)

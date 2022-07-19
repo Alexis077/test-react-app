@@ -3,6 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::GradesController, type: :controller do
+  include JsonWebToken
+  let!(:user) { FactoryBot.create(:user) }
+  let!(:token) { jwt_encode(user_id: user.id) }
+  let!(:headers) { { 'Authorization': token } }
+  
   describe 'GET #index' do
     let!(:student) { FactoryBot.create(:student) }
     let!(:student_2) { FactoryBot.create(:student) }
@@ -13,6 +18,7 @@ RSpec.describe Api::V1::GradesController, type: :controller do
 
     context 'Get all information of grade' do
       it 'success response' do
+        request.headers.merge!(headers)
         get(:index)        
         json_response = JSON.parse(response.body)
         expect(response.status).to eq(200)
@@ -28,6 +34,7 @@ RSpec.describe Api::V1::GradesController, type: :controller do
 
     context 'Get all information of a grade' do
       it 'success response' do
+        request.headers.merge!(headers)
         get(:index, params: {id: grade.id})
         json_response = JSON.parse(response.body)        
         expect(response.status).to eq(200)
@@ -46,6 +53,7 @@ RSpec.describe Api::V1::GradesController, type: :controller do
 
     context 'create new grade' do
       it 'success response' do
+        request.headers.merge!(headers)
         post(:create, params: params)      
         json_response = JSON.parse(response.body)  
         expect(response.status).to eq(200)
@@ -59,6 +67,7 @@ RSpec.describe Api::V1::GradesController, type: :controller do
     context 'create new grade with an invalid score' do
       it 'error response when score is greater than 10' do
         params[:grade][:score] = 11
+        request.headers.merge!(headers)
         post(:create, params: params)      
         json_response = JSON.parse(response.body)  
         expect(response.status).to eq(422)
@@ -67,6 +76,7 @@ RSpec.describe Api::V1::GradesController, type: :controller do
 
       it 'error response when score is less than 0' do
         params[:grade][:score] = -1
+        request.headers.merge!(headers)
         post(:create, params: params)      
         json_response = JSON.parse(response.body)  
         expect(response.status).to eq(422)
@@ -78,6 +88,7 @@ RSpec.describe Api::V1::GradesController, type: :controller do
       let!(:grade) { FactoryBot.create(:grade, student: student, course: course, quarter: 'q1', score: 6)}
   
       it 'error response' do
+        request.headers.merge!(headers)
         post(:create, params: params)      
         json_response = JSON.parse(response.body)  
         expect(response.status).to eq(422)
@@ -98,6 +109,7 @@ RSpec.describe Api::V1::GradesController, type: :controller do
         
     context 'update grade' do
       it 'success response' do
+        request.headers.merge!(headers)
         put(:update, params: params)      
         json_response = JSON.parse(response.body)  
         expect(response.status).to eq(200)
@@ -108,6 +120,7 @@ RSpec.describe Api::V1::GradesController, type: :controller do
     context 'create new grade with an invalid score' do
       it 'error response when score is greater than 10' do
         params[:grade][:score] = 11
+        request.headers.merge!(headers)
         post(:create, params: params)      
         json_response = JSON.parse(response.body)  
         expect(response.status).to eq(422)
@@ -116,6 +129,7 @@ RSpec.describe Api::V1::GradesController, type: :controller do
 
       it 'error response when score is less than 0' do
         params[:grade][:score] = -1
+        request.headers.merge!(headers)
         post(:create, params: params)      
         json_response = JSON.parse(response.body)  
         expect(response.status).to eq(422)
@@ -127,6 +141,7 @@ RSpec.describe Api::V1::GradesController, type: :controller do
       let!(:grade) {FactoryBot.create(:grade, student: student_2, course: course, quarter: 'q2', score: 7)}
       it 'error response' do
         params[:grade][:quarter] = 'q2'
+        request.headers.merge!(headers)
         post(:create, params: params)      
         json_response = JSON.parse(response.body)  
         expect(response.status).to eq(422)
@@ -142,6 +157,7 @@ RSpec.describe Api::V1::GradesController, type: :controller do
 
     context 'Delete register' do
       it 'success response' do
+        request.headers.merge!(headers)
         delete(:destroy, params: { id: grade.id })      
         json_response = JSON.parse(response.body)  
         expect(response.status).to eq(200)
